@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:sizer/sizer.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -46,8 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         Icons.cancel,
                         color: colorScheme.onSurface,
                       ),
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                     ),
                   ),
                 ],

@@ -1,6 +1,7 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
+import 'package:password_manager/src/features/bloc/mixins/initial_storage_mixin.dart';
+import 'package:password_manager/src/features/bloc/mixins/password_manager_mixin.dart';
 import 'package:password_manager/src/features/infra/handler/storage_response_status.dart';
 import 'package:password_manager/src/features/infra/repositories/storage_repository.dart';
 
@@ -8,12 +9,10 @@ part 'storage_event.dart';
 part 'storage_state.dart';
 
 class StorageBloc extends Bloc<StorageEvent, StorageState>
-     {
+    with InitialPasswordStorageMixin, PasswordManagerMixin {
   StorageRepository? storageRepository;
-  // StreamController controller = StreamController();
 
   StorageBloc() : super(StorageStateInitial()) {
-    // readAllStream = controller.stream;
     on<StorageEventInitial>((event, emit) {
       emit(StorageStateInitial());
       storageRepository = StorageRepository(

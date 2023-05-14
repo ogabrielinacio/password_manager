@@ -1,0 +1,102 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:password_manager/src/features/bloc/mixins/initial_storage_mixin.dart';
+import 'package:password_manager/src/features/bloc/storage_bloc.dart';
+
+class LockScreen extends StatefulWidget {
+  const LockScreen({super.key});
+
+  @override
+  State<LockScreen> createState() => _LockScreenState();
+}
+
+class _LockScreenState extends State<LockScreen> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<InitialPasswordStorageMixin>(context)
+        .add(StorageEventReadAll());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    double sizeWidth = MediaQuery.of(context).size.width;
+    double sizeHeight = MediaQuery.of(context).size.height;
+    return Scaffold(
+      body: Container(
+        color: colorScheme.background,
+        child: BlocBuilder<InitialPasswordStorageMixin, StorageState>(
+          builder: (context, state) {
+            if (state is StorageStateReadAll) {
+              return Column(
+                children: [
+                  SizedBox(height: sizeHeight * 0.4),
+                  Text(
+                    'Digite a senha para entrar no banco',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: colorScheme.onSurfaceVariant,
+                        fontSize: sizeHeight * 0.035),
+                  ),
+                  SizedBox(height: sizeHeight * 0.1),
+                ],
+              );
+            } else if (state is StorageStateEmptyList) {
+              return Column(
+                children: [
+                  SizedBox(height: sizeHeight * 0.4),
+                  Text(
+                    'Você não possui senhas armazenadas',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: colorScheme.onSurfaceVariant,
+                        fontSize: sizeHeight * 0.035),
+                  ),
+                  SizedBox(height: sizeHeight * 0.1),
+                  SizedBox(
+                    height: sizeHeight * 0.08,
+                    width: sizeWidth * 0.8,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '');
+                      },
+                      child: Text(
+                        'Adicionar',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: colorScheme.onSurface,
+                            fontSize: sizeHeight * 0.023),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            } else if (state is StorageStateFailure) {
+              return Column(
+                children: [
+                  Text(
+                    'Ocorreu um erro inesperado',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: colorScheme.onSurface,
+                        fontSize: sizeHeight * 0.023),
+                  ),
+                ],
+              );
+            } else {
+              return Center(
+                child: SpinKitDoubleBounce(
+                  color: colorScheme.primary,
+                  size: sizeHeight * 0.35,
+                ),
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
