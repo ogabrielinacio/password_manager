@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:password_manager/src/features/bloc/mixins/initial_storage_mixin.dart';
 import 'package:password_manager/src/features/bloc/mixins/password_manager_mixin.dart';
 import 'package:password_manager/src/features/bloc/storage_bloc.dart';
+import 'package:password_manager/src/features/presenter/define_password/define_password.dart';
 import 'package:password_manager/src/features/presenter/lock_screen/lock_screen.dart';
 import 'package:password_manager/src/components/splash_screen.dart';
 
@@ -27,6 +28,7 @@ class AppWidget extends StatelessWidget {
         routes: {
           '/splash': (_) => const SplashScreenView(),
           '/lock': (_) => const LockScreen(),
+          '/definePassword': (_) => const DefinePassword(),
         },
       ),
     );

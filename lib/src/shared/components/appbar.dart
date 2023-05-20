@@ -6,14 +6,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppBar appBar;
   final String title;
   final bool isfirst;
-  final bool showConfirmDialog;
 
   const CustomAppBar({
     Key? key,
     required this.appBar,
     required this.title,
     this.isfirst = false,
-    this.showConfirmDialog = false,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
