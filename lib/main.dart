@@ -8,7 +8,3 @@ Future<void> main() async {
   await HiveConfig.start();
   runApp(const AppWidget());
 }
-
-
-//TODO: Store what the user inputs as a password, 
-//and when logging in, compare these hashes

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:password_manager/src/features/bloc/mixins/initial_storage_mixin.dart';
 import 'package:password_manager/src/features/bloc/storage_bloc.dart';
+import 'package:password_manager/src/features/presenter/bd_password/view/bd_password.dart';
 
 class LockScreen extends StatefulWidget {
   const LockScreen({super.key});
@@ -26,6 +27,7 @@ class _LockScreenState extends State<LockScreen> {
     double sizeWidth = MediaQuery.of(context).size.width;
     double sizeHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+       resizeToAvoidBottomInset: false,
       body: Container(
         color: colorScheme.background,
         child: Padding(
@@ -39,18 +41,7 @@ class _LockScreenState extends State<LockScreen> {
               BlocBuilder<InitialPasswordStorageMixin, StorageState>(
                 builder: (context, state) {
                   if (state is StorageStateReadAll) {
-                    return Column(
-                      children: [
-                        Text(
-                          'Digite a senha para entrar no banco',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: colorScheme.onSurfaceVariant,
-                              fontSize: sizeHeight * 0.035),
-                        ),
-                        SizedBox(height: sizeHeight * 0.1),
-                      ],
-                    );
+                    return const BDPassword();
                   } else if (state is StorageStateEmptyList) {
                     return Column(
                       children: [

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:password_manager/src/features/presenter/define_password/form_title.dart';
+import 'package:password_manager/src/shared/components/form_title.dart';
 import 'package:password_manager/src/shared/validation_mixins/validations_mixin.dart';
 
 class CheckEqualPassWordForm extends StatefulWidget {

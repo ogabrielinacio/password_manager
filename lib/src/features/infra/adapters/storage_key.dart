@@ -11,4 +11,10 @@ class StorageKey extends HiveObject {
     required this.storageKey,
   });
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['storageKey'] = storageKey;
+    return data;
+  }
+
 }

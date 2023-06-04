@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:password_manager/src/features/presenter/define_password/check_equal_pass_form.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:password_manager/env/env.dart';
+import 'package:password_manager/src/features/bloc/mixins/initial_storage_mixin.dart';
+import 'package:password_manager/src/features/bloc/mixins/password_manager_mixin.dart';
+import 'package:password_manager/src/features/bloc/storage_bloc.dart';
+import 'package:password_manager/src/features/infra/adapters/storage_key.dart';
+import 'package:password_manager/src/shared/components/check_equal_pass_form.dart';
 import 'package:password_manager/src/shared/validation_mixins/validations_mixin.dart';
 
 class DefinePassword extends StatefulWidget {
@@ -57,6 +63,20 @@ class _DefinePasswordState extends State<DefinePassword> with ValidationMixin {
                   width: sizeWidth * 0.8,
                   child: ElevatedButton(
                     onPressed: () {
+                        var data =    StorageKey(
+                          storageKey: 
+                          _passController.text,
+                        );
+                      BlocProvider.of<InitialPasswordStorageMixin>(context).add(
+                        StorageEventWrite(
+                          data: data,
+                        ),
+                      );
+                      BlocProvider.of<PasswordManagerMixin>(context).add(
+                          StorageEventInitial(
+                              dbName: 'PasswordManager',
+                              dbkey: Env.storageKey2));
+                      Navigator.pushNamed(context, '/splash');
                     },
                     child: Text(
                       'Continuar',
