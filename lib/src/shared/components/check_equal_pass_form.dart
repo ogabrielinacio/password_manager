@@ -65,7 +65,7 @@ class _CheckEqualPassWordFormState extends State<CheckEqualPassWordForm>
                       key: widget.currentPassformKey,
                       child: SizedBox(
                         width: sizeWidth * 0.5,
-                        height: sizeHeight * 0.12,
+                        height: sizeHeight * 0.08,
                         child: TextFormField(
                           obscureText: isObscureText,
                           focusNode: widget.currentPassfocusNode,
@@ -91,7 +91,7 @@ class _CheckEqualPassWordFormState extends State<CheckEqualPassWordForm>
                   ),
                   SizedBox(
                     width: sizeWidth * 0.18,
-                    height: sizeHeight * 0.12,
+                    height: sizeHeight * 0.08,
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: SizedBox(
@@ -122,7 +122,6 @@ class _CheckEqualPassWordFormState extends State<CheckEqualPassWordForm>
                 ),
               ),
               SizedBox(
-                // height: 2.h,
                 height: sizeHeight * 0.02,
               ),
             ],

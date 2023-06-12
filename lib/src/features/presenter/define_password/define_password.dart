@@ -49,7 +49,9 @@ class _DefinePasswordState extends State<DefinePassword> with ValidationMixin {
                       color: colorScheme.onSurfaceVariant,
                       fontSize: sizeHeight * 0.035),
                 ),
-                SizedBox(height: sizeHeight * 0.1),
+                SizedBox(
+                  height: sizeHeight * 0.1,
+                ),
                 CheckEqualPassWordForm(
                   formKey: _passkey,
                   confirmFormKey: _confirmPasskey,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:password_manager/src/features/bloc/mixins/password_manager_mixin.dart';
 import 'package:password_manager/src/features/bloc/storage_bloc.dart';
+import 'package:password_manager/src/features/infra/adapters/entry.dart';
 
 class PasswordList extends StatefulWidget {
   const PasswordList({super.key});
@@ -48,7 +50,32 @@ class _PasswordListState extends State<PasswordList> {
         builder: (context, state) {
           debugPrint("state is $state");
           if (state is StorageStateReadAll) {
-            return Container();
+            List data = state.data;
+            return ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    leading: const Icon(Icons.list),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.copy),
+                      onPressed: () async {
+                        await Clipboard.setData(
+                          ClipboardData(text: data[index].password),
+                        );
+                      },
+                    ),
+                    title: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/PasswordInfo', arguments: {
+                          'pass': data[index]
+                        });
+                      },
+                      child: Text(
+                        "${data[index].title}",
+                      ),
+                    ),
+                  );
+                });
           } else if (state is StorageStateEmptyList) {
             return Padding(
               padding: EdgeInsets.only(
