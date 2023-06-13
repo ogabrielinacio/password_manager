@@ -27,25 +27,42 @@ class PasswordInfo extends StatelessWidget {
         ),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.black,
+          SizedBox(height: sizeHeight * 0.1,),
+          Row(
+mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, 'passwordEdit');
+                },
               ),
-              onPressed: () {
-                BlocProvider.of<PasswordManagerMixin>(context)
-                    .add(StorageEventDelete(key: data.title));
-                      Navigator.pushNamedAndRemoveUntil(context,'/splash', (route) => false);
-              },
-            ),
+          SizedBox(width: sizeWidth * 0.3,),
+              IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  BlocProvider.of<PasswordManagerMixin>(context)
+                      .add(StorageEventDelete(key: data.title));
+                        Navigator.pushNamedAndRemoveUntil(context,'/passwordList', (route) => false);
+                },
+              ),
+          SizedBox(width: sizeWidth * 0.1,),
+            ],
           ),
+          SizedBox(height: sizeHeight * 0.05,),
           ItemCopy(text: data.title),
+          SizedBox(height: sizeHeight * 0.05,),
           ItemCopy(text: data.username),
+          SizedBox(height: sizeHeight * 0.05,),
           ItemCopy(text: data.password),
+          SizedBox(height: sizeHeight * 0.05,),
           (data.url != null) ? 
           ItemCopy(text: data.url!) 
           : const SizedBox(),

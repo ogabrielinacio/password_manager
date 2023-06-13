@@ -90,7 +90,7 @@ class HiveService implements IDataStorageService {
   @override
   Future deleteItem(dynamic key) async {
     try {
-      await box.deleteAt(key);
+      await box.delete(key);
       return StorageResponseStatus.itemDeleted;
     } catch (e) {
       debugPrint("Error deleting item of box: $e");

@@ -5,6 +5,7 @@ import 'package:password_manager/env/env.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:password_manager/src/features/bloc/mixins/initial_storage_mixin.dart';
+import 'package:password_manager/src/features/bloc/mixins/password_manager_mixin.dart';
 import 'package:password_manager/src/features/bloc/storage_bloc.dart';
 
 class SplashScreenView extends StatefulWidget {
@@ -21,6 +22,8 @@ class _SplashScreenViewState extends State<SplashScreenView> {
     BlocProvider.of<InitialPasswordStorageMixin>(context).add(
         StorageEventInitial(
             dbName: 'InitialPasswordStorage', dbkey: Env.storageKey1));
+    BlocProvider.of<PasswordManagerMixin>(context).add(
+        StorageEventInitial(dbName: 'PasswordManager', dbkey: Env.storageKey2));
     Future.delayed(const Duration(milliseconds: 1500), () {
       Navigator.pushNamed(context, '/lock');
     });

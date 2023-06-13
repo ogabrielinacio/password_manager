@@ -74,10 +74,10 @@ class _DefinePasswordState extends State<DefinePassword> with ValidationMixin {
                           data: data,
                         ),
                       );
-                      BlocProvider.of<PasswordManagerMixin>(context).add(
-                          StorageEventInitial(
-                              dbName: 'PasswordManager',
-                              dbkey: Env.storageKey2));
+                      // BlocProvider.of<PasswordManagerMixin>(context).add(
+                      //     StorageEventInitial(
+                      //         dbName: 'PasswordManager',
+                      //         dbkey: Env.storageKey2));
                       Navigator.pushNamed(context, '/splash');
                     },
                     child: Text(

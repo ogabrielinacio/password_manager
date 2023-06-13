@@ -37,6 +37,7 @@ class AppWidget extends StatelessWidget {
           '/passwordList': (_) => const PasswordList(),
           '/addPassword': (_) => const AddPassword(),
           '/PasswordInfo': (_) => const PasswordInfo(),
+          '/passwordEdit': (_) => const PasswordInfo(),
         },
       ),
     );

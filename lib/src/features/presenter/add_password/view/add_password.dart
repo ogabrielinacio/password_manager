@@ -26,6 +26,14 @@ class _AddPasswordState extends State<AddPassword> {
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _urlController = TextEditingController();
   ScrollController scrollController = ScrollController();
+  late PasswordManagerMixin   _storageBloc; 
+
+@override
+  void dispose() {
+    _storageBloc.add(StorageEventReadAll());
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -33,6 +41,7 @@ class _AddPasswordState extends State<AddPassword> {
     double sizeWidth = MediaQuery.of(context).size.width;
     double sizeHeight = MediaQuery.of(context).size.height;
     Widget customSpacing = SizedBox(height: sizeHeight * 0.02,);
+     _storageBloc =  BlocProvider.of<PasswordManagerMixin>(context);
     return Scaffold(
       backgroundColor: colorScheme.background,
       appBar: AppBar(
@@ -87,6 +96,9 @@ class _AddPasswordState extends State<AddPassword> {
                     );
                     BlocProvider.of<PasswordManagerMixin>(context).add(
                       StorageEventWrite(data: entryData),
+                    );
+                    BlocProvider.of<PasswordManagerMixin>(context).add(
+                      StorageEventReadAll()
                     );
                       Navigator.pushNamed(context, '/passwordList');
                   },
