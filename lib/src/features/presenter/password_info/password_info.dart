@@ -28,9 +28,11 @@ class PasswordInfo extends StatelessWidget {
       ),
       body: Column(
         children: [
-          SizedBox(height: sizeHeight * 0.1,),
+          SizedBox(
+            height: sizeHeight * 0.1,
+          ),
           Row(
-mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
                 icon: const Icon(
@@ -38,10 +40,14 @@ mainAxisAlignment: MainAxisAlignment.end,
                   color: Colors.black,
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, 'passwordEdit');
+                  Navigator.pushNamed(context, '/passwordEdit', arguments: {
+                    'pass': data,
+                  });
                 },
               ),
-          SizedBox(width: sizeWidth * 0.3,),
+              SizedBox(
+                width: sizeWidth * 0.3,
+              ),
               IconButton(
                 icon: const Icon(
                   Icons.delete,
@@ -50,22 +56,33 @@ mainAxisAlignment: MainAxisAlignment.end,
                 onPressed: () {
                   BlocProvider.of<PasswordManagerMixin>(context)
                       .add(StorageEventDelete(key: data.title));
-                        Navigator.pushNamedAndRemoveUntil(context,'/passwordList', (route) => false);
+                  BlocProvider.of<PasswordManagerMixin>(context)
+                      .add(StorageEventReadAll());
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/passwordList', (route) => false);
                 },
               ),
-          SizedBox(width: sizeWidth * 0.1,),
+              SizedBox(
+                width: sizeWidth * 0.1,
+              ),
             ],
           ),
-          SizedBox(height: sizeHeight * 0.05,),
+          SizedBox(
+            height: sizeHeight * 0.05,
+          ),
           ItemCopy(text: data.title),
-          SizedBox(height: sizeHeight * 0.05,),
+          SizedBox(
+            height: sizeHeight * 0.05,
+          ),
           ItemCopy(text: data.username),
-          SizedBox(height: sizeHeight * 0.05,),
+          SizedBox(
+            height: sizeHeight * 0.05,
+          ),
           ItemCopy(text: data.password),
-          SizedBox(height: sizeHeight * 0.05,),
-          (data.url != null) ? 
-          ItemCopy(text: data.url!) 
-          : const SizedBox(),
+          SizedBox(
+            height: sizeHeight * 0.05,
+          ),
+          (data.url != null) ? ItemCopy(text: data.url!) : const SizedBox(),
         ],
       ),
     );

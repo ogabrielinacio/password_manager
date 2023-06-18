@@ -52,7 +52,6 @@ class _BDPasswordState extends State<BDPassword> {
                           if (_passController.text == element.storageKey ) {
                             Navigator.pushNamed(context, '/passwordList');
                             _passController.text = '';
-                            //TODO: close keyboard
                           } else {
                             setState(() {
                               btnString = 'Senha Inválida';

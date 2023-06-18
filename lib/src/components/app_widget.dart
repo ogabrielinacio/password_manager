@@ -7,6 +7,7 @@ import 'package:password_manager/src/features/presenter/bd_password/view/bd_pass
 import 'package:password_manager/src/features/presenter/define_password/define_password.dart';
 import 'package:password_manager/src/features/presenter/lock_screen/lock_screen.dart';
 import 'package:password_manager/src/components/splash_screen.dart';
+import 'package:password_manager/src/features/presenter/password_edit/password_edit.dart';
 import 'package:password_manager/src/features/presenter/password_info/password_info.dart';
 import 'package:password_manager/src/features/presenter/passwords_list/passwords_list.dart';
 
@@ -37,7 +38,7 @@ class AppWidget extends StatelessWidget {
           '/passwordList': (_) => const PasswordList(),
           '/addPassword': (_) => const AddPassword(),
           '/PasswordInfo': (_) => const PasswordInfo(),
-          '/passwordEdit': (_) => const PasswordInfo(),
+          '/passwordEdit': (_) => const PasswordEdit(),
         },
       ),
     );

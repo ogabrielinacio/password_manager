@@ -6,14 +6,14 @@ import 'package:password_manager/src/features/infra/adapters/entry.dart';
 import 'package:password_manager/src/shared/components/default_form.dart';
 import 'package:password_manager/src/shared/components/form_title.dart';
 
-class AddPassword extends StatefulWidget {
-  const AddPassword({super.key});
+class PasswordEdit extends StatefulWidget {
+  const PasswordEdit({super.key});
 
   @override
-  State<AddPassword> createState() => _AddPasswordState();
+  State<PasswordEdit> createState() => _PasswordEditState();
 }
 
-class _AddPasswordState extends State<AddPassword> {
+class _PasswordEditState extends State<PasswordEdit> {
   final _titleKey = GlobalKey<FormState>();
   final _usernameKey = GlobalKey<FormState>();
   final _passKey = GlobalKey<FormState>();
@@ -21,17 +21,28 @@ class _AddPasswordState extends State<AddPassword> {
   final FocusNode _userameFocusNode = FocusNode();
   final FocusNode _passFocusNode = FocusNode();
   final FocusNode _urlFocusNode = FocusNode();
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passController = TextEditingController();
-  final TextEditingController _urlController = TextEditingController();
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passController = TextEditingController();
+  TextEditingController _urlController = TextEditingController();
   ScrollController scrollController = ScrollController();
-  late PasswordManagerMixin   _storageBloc; 
 
-@override
-  void dispose() {
-    _storageBloc.add(StorageEventReadAll());
-    super.dispose();
+  @override
+  void initState() {
+    super.initState();
+
+    final widgetsBinding = WidgetsBinding.instance;
+    widgetsBinding.addPostFrameCallback((callback) {
+      if (ModalRoute.of(context)?.settings.arguments != null) {
+        final arguments = (ModalRoute.of(context)?.settings.arguments ??
+            <String, dynamic>{}) as Map;
+        Entry data = arguments['pass'];
+        _titleController.text = data.title;
+        _usernameController.text = data.username;
+        _passController.text = data.password;
+        _urlController.text = data.url ?? '';
+      }
+    });
   }
 
   @override
@@ -43,13 +54,12 @@ class _AddPasswordState extends State<AddPassword> {
     Widget customSpacing = SizedBox(
       height: sizeHeight * 0.02,
     );
-    _storageBloc = BlocProvider.of<PasswordManagerMixin>(context);
     return Scaffold(
       backgroundColor: colorScheme.background,
       appBar: AppBar(
         backgroundColor: colorScheme.primary,
         title: Text(
-          'Adicionar Senha',
+          'Editar Senhas',
           style: TextStyle(fontSize: sizeHeight * 0.04),
         ),
       ),
@@ -61,26 +71,36 @@ class _AddPasswordState extends State<AddPassword> {
           ),
           child: Column(
             children: [
-              SizedBox(height: sizeHeight * 0.04,),
-              const Align( alignment: Alignment.topLeft, child: FormTitle(title: "Título:")),
+              SizedBox(
+                height: sizeHeight * 0.04,
+              ),
+              const Align(
+                  alignment: Alignment.topLeft,
+                  child: FormTitle(title: "Título:")),
               DefaultForm(
                 controller: _titleController,
                 formKey: _titleKey,
               ),
               customSpacing,
-              const Align( alignment: Alignment.topLeft, child: FormTitle(title: "Username:")),
+              const Align(
+                  alignment: Alignment.topLeft,
+                  child: FormTitle(title: "Username:")),
               DefaultForm(
                 controller: _usernameController,
                 formKey: _usernameKey,
               ),
               customSpacing,
-              const Align( alignment: Alignment.topLeft, child: FormTitle(title: "Senha:")),
+              const Align(
+                  alignment: Alignment.topLeft,
+                  child: FormTitle(title: "Senha:")),
               DefaultForm(
                 controller: _passController,
                 formKey: _passKey,
               ),
               customSpacing,
-              const Align( alignment: Alignment.topLeft, child: FormTitle(title: "Url(Opcional):")),
+              const Align(
+                  alignment: Alignment.topLeft,
+                  child: FormTitle(title: "Url(Opcional):")),
               DefaultForm(
                 controller: _urlController,
                 formKey: _urlKey,
@@ -95,15 +115,17 @@ class _AddPasswordState extends State<AddPassword> {
                       title: _titleController.text,
                       username: _usernameController.text,
                       password: _passController.text,
-                      url:  _urlController.text,
+                      url: _urlController.text,
                     );
                     BlocProvider.of<PasswordManagerMixin>(context).add(
-                      StorageEventWrite(data: entryData),
+                      StorageEventPut(
+                        key: _titleController.text,
+                        data: entryData,
+                      ),
                     );
-                    BlocProvider.of<PasswordManagerMixin>(context).add(
-                      StorageEventReadAll()
-                    );
-                      Navigator.pushNamed(context, '/passwordList');
+                    BlocProvider.of<PasswordManagerMixin>(context)
+                        .add(StorageEventReadAll());
+                    Navigator.pushNamed(context, '/passwordList');
                   },
                   child: Text(
                     'Salvar',

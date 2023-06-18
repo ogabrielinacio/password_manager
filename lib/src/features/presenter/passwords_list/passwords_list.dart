@@ -66,9 +66,8 @@ class _PasswordListState extends State<PasswordList> {
                     ),
                     title: GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, '/PasswordInfo', arguments: {
-                          'pass': data[index]
-                        });
+                        Navigator.pushNamed(context, '/PasswordInfo',
+                            arguments: {'pass': data[index]});
                       },
                       child: Text(
                         "${data[index].title}",

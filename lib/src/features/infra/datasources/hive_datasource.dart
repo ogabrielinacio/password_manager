@@ -79,7 +79,7 @@ class HiveService implements IDataStorageService {
   @override
   Future updateItem(dynamic key, dynamic device) async {
     try {
-      await box.putAt(key, device);
+      await box.put(key, device);
       return StorageResponseStatus.itemUpdated;
     } catch (e) {
       debugPrint("Error updating box: $e");
