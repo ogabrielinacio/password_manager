@@ -1,6 +1,6 @@
 # password_manager
 
-A new Flutter project.
+A very simple Password Manager for a college project.
 
 ## Getting Started
 
